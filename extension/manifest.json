@@ -1,0 +1,14 @@
+{
+  "name": "Senior Captsone User Experience Testing",
+  "description": "",
+  "version": "0.2.0",
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["extension.js"],
+    "persistent": false
+  },
+  "externally_connectable": {
+    "matches": ["*://localhost/*", "*://localhost:8080/*"]
+  },
+  "permissions": ["desktopCapture"]
+}
