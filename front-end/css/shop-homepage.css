@@ -50,6 +50,10 @@ body {
   color: #007bff;
 }
 
+.vertical-spacer {
+  margin-top: 5vh;
+}
+
 @media (min-width: 991px) {
   .dash-hero-img {
     height: 300px;
