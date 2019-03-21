@@ -15,8 +15,20 @@ $duration = $_POST["duration"];
     echo ("ERROR: No duration in request to save recording.");
 }
 
+if(isset($_POST['positiveFeel'])){
+    $positiveFeel = $_POST['positiveFeel'];
+
+    if ($positiveFeel == "true"){
+        $positiveFeel = true;
+    }else{
+        $positiveFeel = false;
+    }
+}else{
+    $positiveFeel = false;
+}
+
 $dl = new dataLayer();
-$recordingID = $dl-> saveNewRecording($taskID, $duration);
+$recordingID = $dl-> saveNewRecording($taskID, $duration, $positiveFeel);
 
 
 //$fileName = $_FILES["file1"]["name"] . date('m/d/Y_h:i:s', time()); // The file name

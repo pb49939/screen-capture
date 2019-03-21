@@ -14,17 +14,17 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="index.php">Dashboard
+            <a class="nav-link" href="developerDashboard.php">Developer Dashboard
               <span class="sr-only"></span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.php">Developer
+            <a class="nav-link" href="developerWebsite.php?wid=1&af=[WILL_BE_ENCRYPTED_ANTIFORGERY_KEY]">Developer
               <span class="sr-only"></span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="userTester.php">User Tester
+            <a class="nav-link" href="userTesterWebsite.php?wid=1&af=[WILL_BE_ENCRYPTED_ANTIFORGERY_KEY]">User Tester
               <span class="sr-only"></span>
             </a>
           </li>

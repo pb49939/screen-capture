@@ -119,9 +119,11 @@ function _(el) {
 
 function uploadFile(file) {
   // alert(file.name+" | "+file.size+" | "+file.type);
+  var positiveFeel = readCookie("POSITIVE_FEEL");
   var formdata = new FormData();
   formdata.append("file1", file);
   formdata.append("taskID", $("#taskID").val());
+  formdata.append("positiveFeel", readCookie("POSITIVE_FEEL"));
   formdata.append("duration", (videoEndTime - videoStartTime) / 1000);
   var ajax = new XMLHttpRequest();
   ajax.upload.addEventListener("progress", progressHandler, false);

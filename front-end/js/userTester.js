@@ -38,21 +38,30 @@ function startRecordingFlow(taskID) {
           '<div onClick=""><i class="fas fa-stop"></i> Stop</div>'
       }).then(result => {
         if (result.value) {
-          $("#stop-screen").click();
           Swal.fire({
-            title: "<strong>HTML <u>example</u></strong>",
+            title: "<strong>How did it go?</u></strong>",
             type: "info",
-            html:
-              "You can use <b>bold text</b>, " +
-              '<a href="//github.com">links</a> ' +
-              "and other HTML tags",
+            html: "How did you feel using the application for this task?",
             showCloseButton: true,
             showCancelButton: true,
             focusConfirm: false,
-            confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
+            confirmButtonText: '<i class="fa fa-thumbs-up">Great!</i>',
             confirmButtonAriaLabel: "Thumbs up, great!",
-            cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+            cancelButtonText: '<i class="fa fa-thumbs-down"></i> Not Great...',
             cancelButtonAriaLabel: "Thumbs down"
+          }).then(result => {
+            let positiveFeel = false;
+            if (result.value) {
+              positiveFeel = true;
+            }
+
+            if (positiveFeel) {
+              setCookie("POSITIVE_FEEL", true);
+            } else {
+              setCookie("POSITIVE_FEEL", false);
+            }
+
+            $("#stop-screen").click();
           });
         }
       });

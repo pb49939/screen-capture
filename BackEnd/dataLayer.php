@@ -83,16 +83,17 @@ class DataLayer{
 
     }
 
-    function saveNewRecording($taskID, $duration){
+    function saveNewRecording($taskID, $duration, $positiveFeel){
 
         $basePath = "http://localhost/screen-capture/BackEnd/recordings/blob";
 
         $db = new db();
         $db = $db->connect();
-        $sql = "Insert into Recording (TaskID, Duration) VALUES (:taskID, :duration);";
+        $sql = "Insert into Recording (TaskID, Duration, PositiveFeel) VALUES (:taskID, :duration, :positiveFeel);";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':taskID', $taskID);
         $stmt->bindParam(':duration', $duration);
+        $stmt->bindParam(':positiveFeel', $positiveFeel);
         $stmt-> execute();
 
         $sql = "Select RecordingID from Recording Order by RecordingID desc Limit 1;";
@@ -136,7 +137,7 @@ class DataLayer{
 
         $db = new db();
         $db = $db->connect();
-        $sql = "SELECT t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold, count(distinct r.RecordingID) as TotalSessions, sum(IFNULL(r.Duration, 0)) as TotalDuration FROM Task t LEFT JOIN Recording r on r.TaskID = t.TaskID GROUP BY t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold";
+        $sql = "SELECT t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold, count(distinct r.RecordingID) as TotalSessions, sum(IFNULL(r.Duration, 0)) as TotalDuration, sum(IFNULL(r.PositiveFeel, 0)) as TotalPositiveFeel FROM Task t LEFT JOIN Recording r on r.TaskID = t.TaskID GROUP BY t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold";
         $stmt = $db->prepare($sql);
         $stmt-> execute();
 
@@ -150,7 +151,7 @@ class DataLayer{
 
         $db = new db();
         $db = $db->connect();
-        $sql = "SELECT t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold, count(distinct r.RecordingID) as TotalSessions
+        $sql = "SELECT t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold, count(distinct r.RecordingID) as TotalSessions 
                   FROM Task t 
                   LEFT JOIN Recording r on r.TaskID = t.TaskID
                  WHERE t.TaskID = :taskID
@@ -187,6 +188,20 @@ class DataLayer{
             return $row;
         }
         
+    }
+
+    function getWebsiteByWebsiteID($websiteID){
+        $db = new db();
+        $db = $db->connect();
+        $sql = "SELECT * From Website where WebsiteID = :websiteID;";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':websiteID', $websiteID);
+        $stmt-> execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($rows as $row){
+            return $row;
+        }
     }
 
     
