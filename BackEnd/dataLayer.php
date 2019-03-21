@@ -166,6 +166,29 @@ class DataLayer{
         
     }
 
+    function saveNewWebsite($websiteName, $websiteURL){
+        $db = new db();
+        $db = $db->connect();
+        $sql = "INSERT INTO Website (WebsiteName, WebsiteURL) VALUES (:siteName, :siteURL)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':siteName', $websiteName);
+        $stmt->bindParam(':siteURL', $websiteURL);
+        $stmt-> execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "SELECT * From Website where WebsiteName = :siteName and WebsiteURL = :siteURL";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':siteName', $websiteName);
+        $stmt->bindParam(':siteURL', $websiteURL);
+        $stmt-> execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        
+        foreach($rows as $row){
+            return $row;
+        }
+        
+    }
+
     
 }
 

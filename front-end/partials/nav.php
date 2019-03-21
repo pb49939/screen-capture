@@ -29,7 +29,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Manage</a>
+            <a class="nav-link" href="addWebsite.php">Add New Website</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Account</a>

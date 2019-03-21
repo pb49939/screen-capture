@@ -48,3 +48,32 @@ function d_getAllRecordingsByTaskID(taskID) {
 
   return promiseObj;
 }
+
+function d_saveNewWebsite(websiteName, websiteURL) {
+  var params = new Object();
+  params.websiteName = websiteName;
+  params.websiteURL = websiteURL;
+  //params = JSON.stringify(params);
+
+  var promiseObj = new Promise(function(resolve, reject) {
+    request = $.ajax({
+      url: "/screen-capture/BackEnd/requests/addWebsite.php",
+      type: "post",
+      data: params,
+      success: function(response, textStatus, jqXHR) {
+        // Log a message to the console
+
+        var website = JSON.parse(response);
+
+        console.log(website);
+        resolve(website);
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        alert("some error");
+        reject(errorThrown);
+      }
+    });
+  });
+
+  return promiseObj;
+}
