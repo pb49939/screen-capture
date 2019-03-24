@@ -60,12 +60,6 @@ function buildTaskCards(tasks) {
       borderClass = "border-good";
     }
 
-    if (avgPositiveFeel < 50) {
-      borderClass = "border-bad";
-    } else if (avgPositiveFeel < 75) {
-      borderClass = "border-caution";
-    }
-
     var description = tasks[i].TaskDescription || "No Description";
 
     var watchPath =
@@ -104,7 +98,7 @@ function buildTaskCards(tasks) {
     render(
       "div",
       "task-card-containercard-h-100 border-bad-card-task-" + tasks[i].TaskID,
-      '<h4 class="card-title"> <a href = "' +
+      '<h4 class="card-title text-left"> <a href = "' +
         watchPath +
         '" >' +
         tasks[i].TaskName +
@@ -199,7 +193,7 @@ function buildTaskCardsForUserTester(tasks) {
     render(
       "div",
       "task-card-containercard-h-100 border-bad-card-task-" + tasks[i].TaskID,
-      '<h4 class="card-title"> <div class="pretend-link" id="' +
+      '<h4 class="card-title text-left"> <div class="pretend-link" id="' +
         tempID +
         '"onclick="startRecordingFlow(' +
         tasks[i].TaskID +
@@ -234,6 +228,9 @@ function buildTaskCardsHoldingRecordings(recordings) {
   let sortOfLong;
   let borderClass;
   let recordingPath;
+  let positiveFeel = '<i class="fas fa-thumbs-up good-text"></i>';
+  let lackingPositiveFeel = '<i class="fas fa-thumbs-down bad-text"></i>';
+
   for (var i = 0; i < recordings.length; i++) {
     duration = parseInt(recordings[i].Duration);
     tooLong = parseInt(recordings[i].UpperDurationThreshold);
@@ -247,6 +244,12 @@ function buildTaskCardsHoldingRecordings(recordings) {
       borderClass = "border-good";
     }
 
+    if (recordings[i].PositiveFeel == 1) {
+      feel = positiveFeel;
+    } else {
+      feel = lackingPositiveFeel;
+    }
+
     recordingPath = recordings[i].RecordingPath;
 
     render(
@@ -258,12 +261,17 @@ function buildTaskCardsHoldingRecordings(recordings) {
         '<a href="#" onClick ="loadNewVideo(\'' +
         recordingPath +
         '\')"> <img class="card-img-top card-task-img" src="images/asp-register.png" alt=""></a>' +
-        '<div class="card-body"><h4 class= "card-title" ><div onClick ="loadNewVideo(\'' +
+        '<div class="card-body"><h4 class= "card-title text-left" ><div onClick ="loadNewVideo(\'' +
         recordingPath +
         "')\" >" +
         recordings[i].Duration +
-        " seconds</div></h4 ></div >" +
-        '<div class="card-footer"><small class= "text-muted"> Session of prbaldwin7</small ></div ></div>',
+        " seconds</div></h4 >" +
+        "<h6>Posive Feel: " +
+        feel +
+        "</h6></div > " +
+        '<div class="card-footer"><small class= "text-muted">' +
+        trimString(recordings[i].Username, 18) +
+        "</small ></div ></div>",
       "",
       "task-cards-holding-recordings-" + recordings[i].RecordingID,
       "",

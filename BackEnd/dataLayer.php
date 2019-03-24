@@ -123,7 +123,7 @@ class DataLayer{
 
         $db = new db();
         $db = $db->connect();
-        $sql = "Select * from Recording r Join Task t on t.TaskID = r.TaskID Where r.TaskID = :taskID Order by RecordingID desc;";
+        $sql = "Select * from Recording r Join Task t on t.TaskID = r.TaskID Join Website w on w.WebsiteID = t.WebsiteID join User u on u.UserID = r.UserID Where r.TaskID = :taskID Order by RecordingID desc;";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':taskID', $taskID);
         $stmt-> execute();

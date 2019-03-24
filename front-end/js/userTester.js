@@ -20,9 +20,8 @@ function startRecordingFlow(taskID) {
     showCloseButton: true,
     showCancelButton: true,
     focusConfirm: false,
-    confirmButtonText:
-      '<div onClick=""<i class="fa fa-thumbs-up" id="get-screen"></i> Record</div>',
-    cancelButtonText: '<i class="fa fa-thumbs-down"></i> Cancel'
+    confirmButtonText: "Record",
+    cancelButtonText: "Cancel"
   }).then(result => {
     if (result.value) {
       $("#taskID").val(taskID);

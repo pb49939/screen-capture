@@ -7,6 +7,22 @@ body {
   padding-top: 56px;
 }
 
+h4 {
+  text-align: center;
+}
+
+h6 {
+  text-align: center;
+}
+
+.good-text {
+  color: #007bff;
+}
+
+.bad-text {
+  color: #d2222d;
+}
+
 .dash-hero-img {
   height: 400px;
 }
@@ -40,6 +56,12 @@ body {
   min-width: 250px;
 }
 
+.card-footer {
+  max-width: 225px;
+  min-width: 175px;
+  text-align: center;
+}
+
 .card-task-recording {
   height: auto !important;
   margin: 10px;
@@ -54,9 +76,55 @@ body {
   margin-top: 5vh;
 }
 
+.card-title {
+  color: #007bff;
+  cursor: pointer;
+}
+
+.text-left {
+  text-align: left;
+}
+
 .btn-primary {
   background-color: #007bff;
   text-align: center;
+}
+
+/*watch.php specific classes*/
+
+.task-info-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.duration-container,
+.positive-feel-container {
+  min-width: 400px;
+  max-width: 450px;
+  border: solid 3px #007bff;
+  border-radius: 3px;
+  margin: 2vw;
+  text-align: center;
+  padding: 1vw;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#task-cards-holding-recordings-row {
+  margin-left: 55px;
+  margin-right: 0px;
+}
+
+.stats-container {
+  width: 250px;
+  border: solid 1px #d2222d;
+  border-radius: 3px;
+  margin-top: 2vw;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1vmin;
 }
 
 /* add website form*/
@@ -192,4 +260,14 @@ body {
     max-width: 300px;
     height: 150x;
   }
+
+  /*.task-info-container {
+    padding-left: 30px;
+  }
+
+  .duration-container,
+  .positive-feel-container {
+    min-width: 300px;
+    max-width: 450px;
+  } */
 }
