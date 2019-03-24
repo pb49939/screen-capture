@@ -146,26 +146,23 @@ function buildTaskCardsForUserTester(tasks) {
     //for demo only, needs to be actually built out later
 
     var status;
+    var statusText;
     var image = tasks[i].TaskImagePath || tasks[0].TaskImagePath;
     var tempID;
 
     tempID = "get-screen" + i;
 
-    if (i % 4 === 0) {
-      status = "bad";
-      // image = "../images/asp-register.png";
-    } else if (i % 2 == 0) {
+    if (tasks[i].Completed == 1) {
       status = "good";
-      // image = "../images/asp-login.png";
+      statusText = "Completed";
     } else {
-      status = "caution";
-      //image = "../images/asp-excuse-screenshot.png";
+      status = "bad";
+      statusText = "Incomplete";
     }
-
     var description = tasks[i].TaskDescription || "No Description";
 
     if (description !== null && description.length > 60) {
-      description = description.substring(0, 60) + "...";
+      description = trimString(description, 60);
     }
 
     render(
@@ -211,9 +208,7 @@ function buildTaskCardsForUserTester(tasks) {
     render(
       "div",
       "task-card-containercard-h-100 border-bad-card-task-" + tasks[i].TaskID,
-      '<small class="text-muted">' +
-        tasks[i].TotalSessions +
-        " Sessions</small>",
+      '<small class="text-muted">' + statusText + "</small>",
       "card-footer",
       "task-card-containercard-card-footer-" + tasks[i].TaskID,
       "",
@@ -274,6 +269,110 @@ function buildTaskCardsHoldingRecordings(recordings) {
         "</small ></div ></div>",
       "",
       "task-cards-holding-recordings-" + recordings[i].RecordingID,
+      "",
+      "#"
+    );
+  }
+}
+
+function buildDeveloperDashboard(websites) {
+  for (var i = 0; i < websites.length; i++) {
+    render(
+      "div",
+      "developer-dashboard-render-mount",
+      '<div class="col-lg-12"><div class="website-card-container border-top" id="webiste-card-container-' +
+        i +
+        '"></div></div>"',
+      "row vertical-spacer",
+      "developer-dashboard-row-" + i,
+      "",
+      "#"
+    );
+
+    render(
+      "div",
+      "webiste-card-container-" + i,
+      "",
+      "col-lg-4 col-md-6 mb-4" + " website-info-container",
+      "task-card-container-col-lg-4-col-md-6-mb-4-" + websites[i].WebsiteID,
+      "",
+      "#"
+    );
+
+    render(
+      "div",
+      "task-card-container-col-lg-4-col-md-6-mb-4-" + websites[i].WebsiteID,
+      '<a href="https://' +
+        websites[i].WebsiteURL +
+        '"><img class="card-img-top card-website-img" src="' +
+        websites[i].WebsiteImagePath +
+        '" alt="" / ></a>',
+      "card h-100 border-" + websites[i].WebsiteID + " card-website ",
+      "task-card-containercard-h-100 border-bad-card-task-" +
+        websites[i].WebsiteID,
+      "",
+      "#"
+    );
+
+    render(
+      "div",
+      "task-card-containercard-h-100 border-bad-card-task-" +
+        websites[i].WebsiteID,
+      '<a href="https://' +
+        websites[i].WebsiteURL +
+        '"><h4 class="card-title"> <div class="pretend-link" id="' +
+        websites[i].WebsiteID +
+        '"onclick="">' +
+        websites[i].WebsiteName +
+        "</div> </h4><h5>" +
+        websites[i].WebsiteURL +
+        '</h5> <p class="card-text">' +
+        websites[i].WebsiteID +
+        "</p></a>",
+      "card-body",
+      "task-card-containercard-card-body-" + websites[i].WebsiteID,
+      "",
+      "#"
+    );
+
+    render(
+      "div",
+      "task-card-containercard-h-100 border-bad-card-task-" +
+        websites[i].WebsiteID,
+      '<small class="text-muted"><span id=website-sessions-total-' +
+        i +
+        "></span> Total Sessions" +
+        "</small>",
+      "card-footer",
+      "task-card-containercard-card-footer-" + websites[i].WebsiteID,
+      "",
+      "#"
+    );
+
+    //render chart
+
+    render(
+      "div",
+      "webiste-card-container-" + i,
+      '<canvas id="website-chart-' + i + '" width="400" height="400"></canvas>',
+      "website-chart-container",
+      "website-chart-container-" + i,
+      "",
+      "#"
+    );
+
+    //manage website
+
+    render(
+      "div",
+      "webiste-card-container-" + i,
+      '<a href="' +
+        "developerWebsite.php?wid=" +
+        websites[i].WebsiteID +
+        '&af=[WILL_BE_ENCRYPTED_ANTIFORGERY_KEY]"' +
+        '><div class="manage-website">Manage Website</div></a>',
+      "",
+      "manage-website-" + i,
       "",
       "#"
     );

@@ -21,6 +21,24 @@ function getUsernameArrayFromRecordings(recordings) {
   return recordingsUsername;
 }
 
+function getSessionArrayFromTasks(tasks) {
+  sessionArr = [];
+  for (var i = 0; i < tasks.length; i++) {
+    sessionArr.push(parseInt(tasks[i].Sessions));
+  }
+
+  return sessionArr;
+}
+
+function getTaskNameArrayFromTasks(tasks) {
+  taskNameArr = [];
+  for (var i = 0; i < tasks.length; i++) {
+    taskNameArr.push(tasks[i].TaskName);
+  }
+
+  return taskNameArr;
+}
+
 function getRepeatedBackgroundStylesForCharts(
   data,
   styleType,
@@ -158,6 +176,15 @@ function average(data) {
   return avg;
 }
 
+function getSumOfNumberArray(arr) {
+  var sum = 0;
+  for (var i = 0; i < arr.length; i++) {
+    sum += arr[i];
+  }
+
+  return sum;
+}
+
 function setCookie(cookieName, cookieValue) {
   var date = new Date("Februari 10, 2020");
   var dateString = date.toGMTString();
@@ -183,4 +210,12 @@ function trimString(string, trimLength) {
   }
 
   return trimmedString || string;
+}
+
+function setActivePage(activePageID) {
+  $(".nav-item").each(function() {
+    $(this).removeClass("active");
+  });
+
+  $("#" + activePageID).addClass("active");
 }

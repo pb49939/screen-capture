@@ -1,3 +1,7 @@
+$(document).ready(function() {
+  setActivePage("add-new-website");
+});
+
 // Bind to the submit event of our form
 $("#btn-submit").click(function(event) {
   // Prevent default posting of form - put here to work in case of errors

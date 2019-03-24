@@ -147,6 +147,21 @@ class DataLayer{
         
     }
 
+    function getAllTasksForUserTester($userID){
+
+        $db = new db();
+        $db = $db->connect();
+        $sql = "SELECT t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold, count(distinct r.RecordingID) as TotalSessions, sum(IFNULL(r.Duration, 0)) as TotalDuration, sum(IFNULL(r.PositiveFeel, 0)) as TotalPositiveFeel, IFNULL(r.UserID, 0) as Completed FROM Task t LEFT JOIN Recording r on r.TaskID = t.TaskID and r.UserID = :userID GROUP BY t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':userID', $userID);
+        $stmt-> execute();
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $rows;
+
+    }
+
     function getTaskByTaskID($taskID){
 
         $db = new db();
@@ -205,6 +220,33 @@ class DataLayer{
     }
 
     
+
+
+    function getAllWebsitesByUserID($userID){
+        $db = new db();
+        $db = $db->connect();
+        $sql = "SELECT * From Website w Join UserWebsite uw on uw.WebsiteID = w.WebSiteID where uw.UserID = :userID;";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':userID', $userID);
+        $stmt-> execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $rows;
+
+    }
+
+    function getWebsiteInfo($websiteID){
+        $db = new db();
+        $db = $db->connect();
+        $sql = "Select w.WebsiteID, WebsiteName, WebsiteImagePath, t.TaskID, t.TaskName, count(distinct r.RecordingID) as Sessions From Website w join Task t on t.WebsiteID = w.WebsiteID left join Recording r on r.TaskID = t.TaskID where w.WebsiteID = :websiteID Group by w.WebsiteID, WebsiteName, WebsiteImagePath, t.TaskID, t.TaskName;";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':websiteID', $websiteID);
+        $stmt-> execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $rows;
+    }
+
 }
 
 ?>

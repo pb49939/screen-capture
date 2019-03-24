@@ -13,25 +13,25 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
+          <li id="developer-dashboard" class="nav-item">
             <a class="nav-link" href="developerDashboard.php">Developer Dashboard
               <span class="sr-only"></span>
             </a>
           </li>
-          <li class="nav-item">
+          <li id="developer" class="nav-item">
             <a class="nav-link" href="developerWebsite.php?wid=1&af=[WILL_BE_ENCRYPTED_ANTIFORGERY_KEY]">Developer
               <span class="sr-only"></span>
             </a>
           </li>
-          <li class="nav-item">
+          <li id="user-tester" class="nav-item">
             <a class="nav-link" href="userTesterWebsite.php?wid=1&af=[WILL_BE_ENCRYPTED_ANTIFORGERY_KEY]">User Tester
               <span class="sr-only"></span>
             </a>
           </li>
-          <li class="nav-item">
+          <li id="add-new-website" class="nav-item">
             <a class="nav-link" href="addWebsite.php">Add New Website</a>
           </li>
-          <li class="nav-item">
+          <li id="account" class="nav-item">
             <a class="nav-link" href="#">Account</a>
           </li>
         </ul>

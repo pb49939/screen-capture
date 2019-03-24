@@ -1,7 +1,7 @@
 $(document).ready(function() {
-  console.log("userTester.js");
+  setActivePage("user-tester");
 
-  d_getAllTasks().then(
+  d_getAllTasksForUserTester(1).then(
     tasks => {
       buildTaskList(tasks);
       buildTaskCardsForUserTester(tasks);
@@ -20,7 +20,8 @@ function startRecordingFlow(taskID) {
     showCloseButton: true,
     showCancelButton: true,
     focusConfirm: false,
-    confirmButtonText: "Record",
+    confirmButtonText:
+      "<a href='https://www.alphasigs.org' target='blank'><span style='color: white;'>Record</span></a>",
     cancelButtonText: "Cancel"
   }).then(result => {
     if (result.value) {
@@ -44,7 +45,8 @@ function startRecordingFlow(taskID) {
             showCloseButton: true,
             showCancelButton: true,
             focusConfirm: false,
-            confirmButtonText: '<i class="fa fa-thumbs-up">Great!</i>',
+            confirmButtonText:
+              '<i class="fa fa-thumbs-up"></i> <span style="color: white;">Great!</span>',
             confirmButtonAriaLabel: "Thumbs up, great!",
             cancelButtonText: '<i class="fa fa-thumbs-down"></i> Not Great...',
             cancelButtonAriaLabel: "Thumbs down"

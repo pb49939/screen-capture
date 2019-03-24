@@ -21,6 +21,33 @@ function d_getAllTasks() {
   return promiseObj;
 }
 
+function d_getAllTasksForUserTester(userID) {
+  var params = new Object();
+  params.userID = userID;
+
+  var promiseObj = new Promise(function(resolve, reject) {
+    request = $.ajax({
+      url: "/screen-capture/BackEnd/requests/getAllTasksForUserTester.php",
+      type: "post",
+      data: params,
+      success: function(response, textStatus, jqXHR) {
+        // Log a message to the console
+
+        var tasks = JSON.parse(response);
+
+        console.log(tasks);
+        resolve(tasks);
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        alert("some error");
+        reject(errorThrown);
+      }
+    });
+  });
+
+  return promiseObj;
+}
+
 function d_getAllRecordingsByTaskID(taskID) {
   var params = new Object();
   params.taskID = taskID;
@@ -67,6 +94,60 @@ function d_saveNewWebsite(websiteName, websiteURL) {
 
         console.log(website);
         resolve(website);
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        alert("some error");
+        reject(errorThrown);
+      }
+    });
+  });
+
+  return promiseObj;
+}
+
+function d_getAllWebsitesForUser(userID) {
+  var params = new Object();
+  params.userID = userID;
+
+  var promiseObj = new Promise(function(resolve, reject) {
+    request = $.ajax({
+      url: "/screen-capture/BackEnd/requests/getAllWebsitesForUser.php",
+      type: "post",
+      data: params,
+      success: function(response, textStatus, jqXHR) {
+        // Log a message to the console
+
+        var websites = JSON.parse(response);
+
+        console.log(websites);
+        resolve(websites);
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        alert("some error");
+        reject(errorThrown);
+      }
+    });
+  });
+
+  return promiseObj;
+}
+
+function d_getWebsiteInfoByWebsiteID(websiteID) {
+  var params = new Object();
+  params.websiteID = websiteID;
+
+  var promiseObj = new Promise(function(resolve, reject) {
+    request = $.ajax({
+      url: "/screen-capture/BackEnd/requests/getWebsiteInfoByWebsiteID.php",
+      type: "post",
+      data: params,
+      success: function(response, textStatus, jqXHR) {
+        // Log a message to the console
+
+        var websiteInfo = JSON.parse(response);
+
+        console.log(websiteInfo);
+        resolve(websiteInfo);
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
         alert("some error");

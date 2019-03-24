@@ -73,13 +73,13 @@ function buildPositiveFeelChart(recordings) {
     datasets: [
       {
         data: chartData,
-        backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
-        borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"]
+        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)"],
+        borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"]
       }
     ],
 
     // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: ["Positive Fee", "Lacking Positive Feel"]
+    labels: ["Positive Feel", "Lacking Positive Feel"]
   };
   var ctx = document.getElementById("positive-feel").getContext("2d");
   var options = Chart.defaults.doughnut;
