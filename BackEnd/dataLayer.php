@@ -4,39 +4,31 @@ include_once("config.php");
 
 class DataLayer{
 
-    public function signUp(String $firstName, String $lastName, String $email, String $password){
-        $token = bin2hex(random_bytes(16));
+     public function saveNewUser(String $firstName, String $lastName, String $email, String $password, String $username, String $userType){
         $db = new db();
         $db = $db->connect();
-        $sql = "Insert into User (FirstName, LastName, Email, Password, Token) Values(:firstName, :lastName, :email, :password, :token);";
+        $sql = "Insert into User (Username, FirstName, LastName, Password, UserType) Values(:username, :firstName, :lastName, :password, 'Developer');";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':firstName', $firstName);
         $stmt->bindParam(':lastName', $lastName);
-        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
         $stmt-> execute();
-
-        $sql = "Select UserID, Token from User where Email = :email and Password = :password and :token = Token;";
+        $sql = "Select UserID, Token from User where Email = :email and Password = :password;";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $password);
-        $stmt->bindParam(':token', $token);
         $stmt-> execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         foreach($rows as $row){
            
            setcookie("is-token", $row["Token"], time() + (86400 * 30), "/");
            setcookie("us-uid", $row["UserID"], time() + (86400 * 30), "/");
-
            return $row["UserID"];
-
             
            
         }
-
         return "";
-
     }
 
     public function saveNewBrother(int $userID, String $firstName, String $lastName, String $pledgeSemester, int $pledgeYear, String $status, String $oaklandEmail, String $phoneNumber, String $position){
