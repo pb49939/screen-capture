@@ -1,41 +1,115 @@
-/*
-$("#btn-submit").click( function() {
- $.post( $("#register").attr("action"), 
-         $("#register :input").serializeArray(), 
-         function(info){ $("#result").html(info); 
-  });
-});
-*/
+var formValid;
 
-// Variable to hold request
-var request;
+$("#btn-submit-developer").click(function() {
+  formValid = true;
+  var username = validateNotNull("Username", $("#d-username").val());
+  var firstName = validateNotNull("First Name", $("#d-first-name").val());
+  var lastName = validateNotNull("Last Name", $("#d-last-name").val());
+  var email = validateNotNull("Email", $("#d-email").val());
+  var password = validateNotNull("Password", $("#d-password").val());
+  var passwordConfirm = validateNotNull(
+    "Confirm Password",
+    $("#d-confirm-password").val()
+  );
 
-// Bind to the submit event of our form
-$("#register").submit(function(event) {
-  // Prevent default posting of form - put here to work in case of errors
-  event.preventDefault();
+  validatePasswordMatch(password.toString(), passwordConfirm.toString());
 
-  var valid = true;
-  if (valid === false) {
-  } else {
-    // Abort any pending request
-    if (request) {
-      request.abort();
-    }
-    // setup some local variables
-    var $form = $(this);
-
-    // Let's select and cache all the fields
-    var $inputs = $form.find("input, select, button, textarea");
-
-    // Serialize the data in the form
-    var serializedData = $form.serialize();
-
-    d_saveNewUser(serializedData).then(
-      user => {
-        window.location = "/developerDashboard.php";
-      },
-      () => {}
+  if (formValid) {
+    submitRegistration(
+      username,
+      firstName,
+      lastName,
+      email,
+      password,
+      "DEVELOPER"
     );
   }
 });
+
+$("#btn-submit-user-tester").click(function() {
+  formValid = true;
+  var username = validateNotNull("Username", $("#ut-username").val());
+  var firstName = validateNotNull("First Name", $("#ut-first-name").val());
+  var lastName = validateNotNull("Last Name", $("#ut-last-name").val());
+  var email = validateNotNull("Email", $("#ut-email").val());
+  var password = validateNotNull("Password", $("#ut-password").val());
+  var passwordConfirm = validateNotNull(
+    "Confirm Password",
+    $("#ut-confirm-password").val()
+  );
+
+  validatePasswordMatch(password.toString(), passwordConfirm.toString());
+
+  if (formValid) {
+    submitRegistration(
+      username,
+      firstName,
+      lastName,
+      email,
+      password,
+      "USER_TESTER"
+    );
+  }
+});
+
+function validatePasswordMatch(string1, string2) {
+  if (string1.toUpperCase() != string2.toUpperCase() && formValid) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000
+    });
+
+    Toast.fire({
+      type: "error",
+      title: "Passwords do not match"
+    });
+
+    formValid = false;
+  }
+}
+
+function validateNotNull(paramaterName, paramater) {
+  if ((formValid && paramater == "") || (paramater == null && formValid)) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000
+    });
+
+    Toast.fire({
+      type: "error",
+      title: paramaterName + " is a required field"
+    });
+
+    formValid = false;
+  }
+
+  return paramater || "";
+}
+
+function submitRegistration(
+  username,
+  firstName,
+  lastName,
+  email,
+  password,
+  userType
+) {
+  var serializedData = new Object();
+  serializedData.username = username;
+  serializedData.firstName = firstName;
+  serializedData.lastName = lastName;
+  serializedData.email = email;
+  serializedData.password = password;
+  serializedData.userType = userType;
+
+  d_saveNewUser(serializedData).then(
+    user => {
+      alert("done");
+    },
+    () => {}
+  );
+}

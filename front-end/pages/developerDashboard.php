@@ -1,6 +1,7 @@
 <?php
 include_once("../partials/header.php");
 include_once("../partials/nav.php");
+include_once("../partials/authenticate.php");
 ?>
 
 <!-- Page Content -->

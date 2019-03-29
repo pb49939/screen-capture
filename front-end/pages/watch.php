@@ -2,6 +2,7 @@
 include_once("../partials/header.php");
 include_once("../partials/nav.php");
 include_once("../../BackEnd/dataLayer.php");
+include_once("../partials/authenticate.php");
 
 
 if (isset($_GET['tid'])) {

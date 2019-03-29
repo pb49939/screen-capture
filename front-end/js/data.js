@@ -22,6 +22,27 @@ function d_saveNewUser(params) {
   return promiseObj;
 }
 
+function d_login(params) {
+  var promiseObj = new Promise(function(resolve, reject) {
+    request = $.ajax({
+      url: "/screen-capture/BackEnd/requests/authenticateUser.php",
+      type: "post",
+      data: params,
+      success: function(response, textStatus, jqXHR) {
+        // Log a message to the console
+
+        resolve(response);
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        alert("some error");
+        reject(errorThrown);
+      }
+    });
+  });
+
+  return promiseObj;
+}
+
 function d_getAllTasks() {
   var promiseObj = new Promise(function(resolve, reject) {
     request = $.ajax({

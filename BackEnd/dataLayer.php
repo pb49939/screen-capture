@@ -5,76 +5,113 @@ include_once("config.php");
 class DataLayer{
 
      public function saveNewUser(String $firstName, String $lastName, String $email, String $password, String $username, String $userType){
+        $token = bin2hex(random_bytes(16));
         $db = new db();
         $db = $db->connect();
-        $sql = "Insert into User (Username, FirstName, LastName, Password, UserType) Values(:username, :firstName, :lastName, :password, 'Developer');";
+        $sql = "Insert into User (Username, Email, FirstName, LastName, Password, UserType, Token) Values(:username, :email, :firstName, :lastName, :password, :userType, :token);";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':firstName', $firstName);
         $stmt->bindParam(':lastName', $lastName);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
-        $stmt-> execute();
-        $sql = "Select UserID, Token from User where Email = :email and Password = :password;";
-        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':userType', $userType);
         $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':token', $token);
+        $stmt-> execute();
+        $sql = "Select UserID, Username, FirstName, LastName, Password, UserType, Email, Token from User where Username = :username and Password = :password;";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
         $stmt-> execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach($rows as $row){
            
-           setcookie("is-token", $row["Token"], time() + (86400 * 30), "/");
-           setcookie("us-uid", $row["UserID"], time() + (86400 * 30), "/");
-           return $row["UserID"];
+           $_SESSION["username"] = $row["Username"];
+           $_SESSION["first-name"] = $row["FirstName"];
+           $_SESSION["last-name"] = $row["LastName"];
+           $_SESSION["password"] = $row["Password"];
+           $_SESSION["user-type"] = $row["UserType"];
+           $_SESSION["email"] = $row["Email"];
+           $_SESSION["token"] = $row["Token"];
+
+           setcookie("u", $row["UserID"], time() + (86400 * 30), "/");
+           setcookie("fn", $row["FirstName"], time() + (86400 * 30), "/");
+           setcookie("ln", $row["LastName"], time() + (86400 * 30), "/");
+           setcookie("ut", $row["UserType"], time() + (86400 * 30), "/");
+           setcookie("e", $row["Email"], time() + (86400 * 30), "/");
+           setcookie("un", $row["Username"], time() + (86400 * 30), "/");
+           setcookie("p", $row["Password"], time() + (86400 * 30), "/");
+           setcookie("t", $row["Token"], time() + (86400 * 30), "/");
+           
+           return "success";
+           
             
            
         }
-        return "";
+       
     }
 
-    public function saveNewBrother(int $userID, String $firstName, String $lastName, String $pledgeSemester, int $pledgeYear, String $status, String $oaklandEmail, String $phoneNumber, String $position){
-        
+    public function authenticateToken(){
         $db = new db();
         $db = $db->connect();
-        $sql = "Insert into Brother (UserID, FirstName, LastName, PledgeSemester, PledgeYear, OaklandEmail, PhoneNumber, Status, Position, CreateDate, LastUpdatedDate) Values(:userID, :firstName, :lastName, :pledgeSemester, :pledgeYear, :oaklandEmail, :phoneNumber, :status, :position, Now(), Now());";
+        $sql = "Select * from User where Token = :token;";
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':userID', $userID);
-        $stmt->bindParam(':firstName', $firstName);
-        $stmt->bindParam(':lastName', $lastName);
-        $stmt->bindParam(':pledgeSemester', $pledgeSemester);
-        $stmt->bindParam(':pledgeYear', $pledgeYear);
-        $stmt->bindParam(':oaklandEmail', $oaklandEmail);
-        $stmt->bindParam(':phoneNumber', $phoneNumber);
-        $stmt->bindParam(':status', $status);
-        $stmt->bindParam(':position', $position);
+        $stmt->bindParam(':token', $_COOKIE["t"]);
         $stmt-> execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach($rows as $row){
+            return true;
+        }
 
-        print_r($stmt->errorInfo()); 
-     
+        return false;
+    }
 
-       
 
-        $sql = "Select BrotherID, Position, FirstName, LastName, IsPrudential from Brother where UserID = :userID;";
+    public function logIn($username, $password){
+
+        $db = new db();
+        $db = $db->connect();
+        $sql = "Select * from User where Username = :username;";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt-> execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach($rows as $row){
+
+            if(password_verify($password, $row["Password"])){
+                
+                setcookie("u", $row["UserID"], time() + (86400 * 30), "/");
+                setcookie("fn", $row["FirstName"], time() + (86400 * 30), "/");
+                setcookie("ln", $row["LastName"], time() + (86400 * 30), "/");
+                setcookie("ut", $row["UserType"], time() + (86400 * 30), "/");
+                setcookie("e", $row["Email"], time() + (86400 * 30), "/");
+                setcookie("un", $row["Username"], time() + (86400 * 30), "/");
+                setcookie("p", $row["Password"], time() + (86400 * 30), "/");
+                setcookie("t", $row["Token"], time() + (86400 * 30), "/");
+
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+
+        public function getUserByUserID(String $userID){
+
+        $db = new db();
+        $db = $db->connect();
+        $sql = "Select * From User where UserID = :userID;";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':userID', $userID);
         $stmt-> execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         foreach($rows as $row){
-
-           setcookie("asp-first-name", $row["FirstName"], time() + (86400 * 30), "/");
-           setcookie("asp-last-name", $row["LastName"], time() + (86400 * 30), "/");
-           setcookie("asp-position", $row["Position"], time() + (86400 * 30), "/");
-           setcookie("asp-brother-id", $row["BrotherID"], time() + (86400 * 30), "/");
-           setcookie("asp-pr", $row["IsPrudential"], time() + (86400 * 30), "/");
-           
-           return $row["BrotherID"];
+            return $row;
         }
 
-        return "";
-
-
     }
-
     function saveNewRecording($taskID, $duration, $positiveFeel){
 
         $basePath = "http://localhost/screen-capture/BackEnd/recordings/blob";

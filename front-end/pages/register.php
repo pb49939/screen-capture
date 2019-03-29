@@ -1,83 +1,200 @@
-<html> 
-<link href="styles/styles.css" rel="stylesheet"></link>
-
-<head>
-    <title>THE SESSION SANCTUM</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-</head>
-
-<body>
-
-<div id="outer-border"> 
-
-	
-	<div class="home-outer-div"> 
+<?php
+include_once("../partials/header.php");
 
 
-  <div id="login-box-background">
-  </div>
-   
-  <div id="login-box">
-  
-    <div class="left">
-    <h1>THE SESSION SANCTUM</h1>
-    <h2>Register your account</h2>
 
-    <form id="register">
+?>
 
-    
-    <input type="text" id="firstName" name="firstName" placeholder="First Name" />
-    <input type="text" id="lastName" name="lastName" placeholder="Last Name" />
-    <input type="text" id="userName" name="userName" placeholder="Username" />
 
-        <div class="select-container">
 
-            <label for="status">Position</label>
-
-            <select id="position" name="position" form="register">
-                <option value="None">None</option>
-                <option value="User Tester">User Tester</option>
-                <option value="Developer">Developer</option>
-
-            </select>
-
+<div class="container register">
+  <div class="row">
+    <div class="col-md-3 register-left">
+      <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+      <h3>The Session Sanctum</h3>
+      <p>Applying data driven, automated solutions to testing how users experience your web application.</p>
+      <a href="index.php"> <input type="submit" name="" value="Sign In" /></a><br />
     </div>
+    <div class="col-md-9 register-right">
+      <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            id="developer"
+            data-toggle="tab"
+            href="#home"
+            role="tab"
+            aria-controls="home"
+            aria-selected="true"
+            >Developer</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="user-tester"
+            data-toggle="tab"
+            href="#profile"
+            role="tab"
+            aria-controls="profile"
+            aria-selected="false"
+            >User Tester</a
+          >
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div
+          class="tab-pane fade show active"
+          id="home"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          <h3 class="register-heading">Register as a Developer</h3>
+          <div class="row register-form">
+            <div class="col-md-6">
+            <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Username *"
+                  value=""
+                  id="d-username"
+                />
+              </div>  
+            <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="First Name *"
+                  value=""
+                  id="d-first-name"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Last Name *"
+                  value=""
+                  id="d-last-name"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
 
-    <input type="email" id="email" name="email" placeholder="Email" />
+            <div class="form-group">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Your Email *"
+                  value=""
+                  id="d-email"
+                />
+              </div>
+              
+              <div class="form-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Password *"
+                  value=""
+                  id="d-password"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Confirm Password *"
+                  value=""
+                   id="d-confirm-password"
+                />
+              </div>
+        
+              <input type="submit" class="btnRegister" id="btn-submit-developer" />
+            </div>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade show"
+          id="profile"
+          role="tabpanel"
+          aria-labelledby="profile-tab"
+        >
+          <h3 class="register-heading">Apply as a User Tester</h3>
+          <div class="row register-form">
+            <div class="col-md-6">
+            <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Username *"
+                  value=""
+                  id="ut-username"
+                />
+              </div>  
+            
+            <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="First Name *"
+                  value=""
+                  id="ut-first-name"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Last Name *"
+                  value=""
+                  id="ut-last-name"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Email *"
+                  value=""
+                  id="ut-email"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Password *"
+                  value=""
+                  id="ut-password"
 
-    <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" />
-
-    <input type="password" id="password1" name="password1" placeholder="Password" />
-
-    <input type="password" id="password2" name="password2" placeholder="Confirm Password" />
-
-    <input type="submit" name="register" value="register" id="btn-submit"/>
-
-
-    </form>
-
-    <a href="/index.php"><p id="reg">Already have an account? Sign in here.</p></a>
-
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Confirm Password *"
+                  value=""
+                  id="ut-confirm-password"
+                />
+              </div>
+              
+              <input type="submit" class="btnRegister" id="btn-submit-user-tester" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <span id="result"></span>
-  
-  
-</div>
-
-<div class="sign-in">
-
-</div>	
-		
-	</div>
-
 </div>
 
 
-</body>
+<?php
+  include_once("../partials/footer.php");
+ ?>
 
-</html>
-
-<?php include_once("../partials/footer.php");?>
-
-<script src="../js/register.js"></script>
+ <script src="../js/register.js"></script>
