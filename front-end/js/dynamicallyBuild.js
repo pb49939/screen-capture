@@ -340,7 +340,7 @@ function buildDeveloperDashboard(websites) {
       "task-card-containercard-h-100 border-bad-card-task-" +
         websites[i].WebsiteID,
       '<small class="text-muted"><span id=website-sessions-total-' +
-        i +
+        websites[i].WebsiteID +
         "></span> Total Sessions" +
         "</small>",
       "card-footer",
@@ -354,7 +354,9 @@ function buildDeveloperDashboard(websites) {
     render(
       "div",
       "webiste-card-container-" + i,
-      '<canvas id="website-chart-' + i + '" width="400" height="400"></canvas>',
+      '<canvas id="website-chart-' +
+        websites[i].WebsiteID +
+        '" width="400" height="400"></canvas>',
       "website-chart-container",
       "website-chart-container-" + i,
       "",

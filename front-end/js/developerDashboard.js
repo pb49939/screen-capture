@@ -11,56 +11,55 @@ $(document).ready(function() {
 });
 
 function buildWebsiteChart(websites) {
-  var promiseResolveCounter = 0;
   for (var j = 0; j < websites.length; j++) {
     d_getWebsiteInfoByWebsiteID(websites[j].WebsiteID).then(
       websiteInfo => {
-        var ctx = document.getElementById(
-          "website-chart-" + promiseResolveCounter
-        );
+        if (websiteInfo !== null && websiteInfo.length > 0) {
+          var renderNodeID = "website-chart-" + websiteInfo[0].WebsiteID;
+          var ctx = document.getElementById(renderNodeID);
 
-        var sessionsArr = getSessionArrayFromTasks(websiteInfo);
-        $("#website-sessions-total-" + promiseResolveCounter).text(
-          getSumOfNumberArray(sessionsArr)
-        );
-        var taskNameArr = getTaskNameArrayFromTasks(websiteInfo);
-        var chartBackgroundColors = getRepeatedBackgroundStylesForCharts(
-          websiteInfo,
-          "background",
-          0
-        );
-        var chartBorderColors = getRepeatedBackgroundStylesForCharts(
-          websiteInfo,
-          "border",
-          0
-        );
-        promiseResolveCounter++;
-        var myChart = new Chart(ctx, {
-          type: "bar",
-          data: {
-            labels: taskNameArr,
-            datasets: [
-              {
-                label: "Number of User Tester's Sessions",
-                data: sessionsArr,
-                backgroundColor: chartBackgroundColors,
-                borderColor: chartBorderColors,
-                borderWidth: 1
-              }
-            ]
-          },
-          options: {
-            scales: {
-              yAxes: [
+          var sessionsArr = getSessionArrayFromTasks(websiteInfo);
+          $("#website-sessions-total-" + websiteInfo[0].WebsiteID).text(
+            getSumOfNumberArray(sessionsArr)
+          );
+          var taskNameArr = getTaskNameArrayFromTasks(websiteInfo);
+          var chartBackgroundColors = getRepeatedBackgroundStylesForCharts(
+            websiteInfo,
+            "background",
+            0
+          );
+          var chartBorderColors = getRepeatedBackgroundStylesForCharts(
+            websiteInfo,
+            "border",
+            0
+          );
+          var myChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels: taskNameArr,
+              datasets: [
                 {
-                  ticks: {
-                    beginAtZero: true
-                  }
+                  label: "Number of User Tester's Sessions",
+                  data: sessionsArr,
+                  backgroundColor: chartBackgroundColors,
+                  borderColor: chartBorderColors,
+                  borderWidth: 1
                 }
               ]
+            },
+            options: {
+              scales: {
+                yAxes: [
+                  {
+                    ticks: {
+                      beginAtZero: true
+                    }
+                  }
+                ]
+              }
             }
-          }
-        });
+          });
+        }
       },
       () => {}
     );
