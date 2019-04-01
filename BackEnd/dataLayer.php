@@ -118,11 +118,12 @@ class DataLayer{
 
         $db = new db();
         $db = $db->connect();
-        $sql = "Insert into Recording (TaskID, Duration, PositiveFeel) VALUES (:taskID, :duration, :positiveFeel);";
+        $sql = "Insert into Recording (TaskID, Duration, PositiveFeel, UserID) VALUES (:taskID, :duration, :positiveFeel, :userID);";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':taskID', $taskID);
         $stmt->bindParam(':duration', $duration);
         $stmt->bindParam(':positiveFeel', $positiveFeel);
+        $stmt->bindParam(':userID', $_COOKIE["u"]);
         $stmt-> execute();
 
         $sql = "Select RecordingID from Recording Order by RecordingID desc Limit 1;";
@@ -162,12 +163,13 @@ class DataLayer{
         
     }
 
-    function getAllTasks(){
+    function getAllTasksByWebsiteID($websiteID){
 
         $db = new db();
         $db = $db->connect();
-        $sql = "SELECT t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold, count(distinct r.RecordingID) as TotalSessions, sum(IFNULL(r.Duration, 0)) as TotalDuration, sum(IFNULL(r.PositiveFeel, 0)) as TotalPositiveFeel FROM Task t LEFT JOIN Recording r on r.TaskID = t.TaskID GROUP BY t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold";
+        $sql = "SELECT t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold, count(distinct r.RecordingID) as TotalSessions, sum(IFNULL(r.Duration, 0)) as TotalDuration, sum(IFNULL(r.PositiveFeel, 0)) as TotalPositiveFeel FROM Task t Join Website w on w.WebsiteID = t.WebsiteID LEFT JOIN Recording r on r.TaskID = t.TaskID where t.WebsiteID = :websiteID GROUP BY t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold;";
         $stmt = $db->prepare($sql);
+         $stmt->bindParam(':websiteID', $websiteID);
         $stmt-> execute();
 
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -211,13 +213,14 @@ class DataLayer{
         
     }
 
-    function saveNewWebsite($websiteName, $websiteURL){
+    function saveNewWebsite($websiteName, $websiteURL, $websiteImagePath){
         $db = new db();
         $db = $db->connect();
-        $sql = "INSERT INTO Website (WebsiteName, WebsiteURL) VALUES (:siteName, :siteURL)";
+        $sql = "INSERT INTO Website (WebsiteName, WebsiteURL, WebsiteImagePath) VALUES (:siteName, :siteURL, :websiteImagePath)";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':siteName', $websiteName);
         $stmt->bindParam(':siteURL', $websiteURL);
+        $stmt->bindParam(':websiteImagePath', $websiteImagePath);
         $stmt-> execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $sql = "SELECT * From Website where WebsiteName = :siteName and WebsiteURL = :siteURL";
@@ -229,6 +232,13 @@ class DataLayer{
         
         
         foreach($rows as $row){
+
+        $sql = "INSERT INTO UserWebsite (UserID, WebsiteID) VALUES (:userID, :websiteID)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':userID', $_COOKIE["u"]);
+        $stmt->bindParam(':websiteID', $row["WebsiteID"]);
+        $stmt-> execute();
+
             return $row;
         }
         

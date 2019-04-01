@@ -31,6 +31,10 @@ include_once("../partials/authenticate.php");
                 <div class="section"><span>2</span>Site's URL</div>
                 <div class="inner-wrap">
                     <label>URL of page to be tested: <input type="text" name="siteurl" id="site_url" required /></label>
+                </div> 
+                <div class="section"><span>3</span>Site's Image Path</div>
+                <div class="inner-wrap">
+                    <label>Image used for this website: <input type="text" name="siteimgpath" id="site_img_path" required /></label>
                 </div>  
             
             

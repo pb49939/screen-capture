@@ -24,8 +24,6 @@ function buildTaskCards(tasks) {
   );
 
   for (var i = 0; i < tasks.length; i++) {
-    //for demo only, needs to be actually built out later
-
     var status;
     var image = tasks[i].TaskImagePath || tasks[0].TaskImagePath;
     var avgDuration;

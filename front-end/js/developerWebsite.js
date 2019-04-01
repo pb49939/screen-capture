@@ -3,7 +3,9 @@ $(document).ready(function() {
 
   setActivePage("developer");
 
-  d_getAllTasks().then(
+  var websiteID = $("#websiteID").val();
+
+  d_getAllTasksByWebsiteID(websiteID).then(
     tasks => {
       buildTaskList(tasks);
       buildTaskCards(tasks);

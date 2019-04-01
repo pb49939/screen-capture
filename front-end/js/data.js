@@ -43,11 +43,15 @@ function d_login(params) {
   return promiseObj;
 }
 
-function d_getAllTasks() {
+function d_getAllTasksByWebsiteID(websiteID) {
+  var params = new Object();
+  params.websiteID = websiteID;
+
   var promiseObj = new Promise(function(resolve, reject) {
     request = $.ajax({
-      url: "/screen-capture/BackEnd/requests/getAllTasks.php",
+      url: "/screen-capture/BackEnd/requests/getAllTasksByWebsiteID.php",
       type: "post",
+      data: params,
       success: function(response, textStatus, jqXHR) {
         // Log a message to the console
 
@@ -121,10 +125,11 @@ function d_getAllRecordingsByTaskID(taskID) {
   return promiseObj;
 }
 
-function d_saveNewWebsite(websiteName, websiteURL) {
+function d_saveNewWebsite(websiteName, websiteURL, websiteImagePath) {
   var params = new Object();
   params.websiteName = websiteName;
   params.websiteURL = websiteURL;
+  params.websiteImagePath = websiteImagePath;
   //params = JSON.stringify(params);
 
   var promiseObj = new Promise(function(resolve, reject) {

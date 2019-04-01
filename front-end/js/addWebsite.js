@@ -9,6 +9,7 @@ $("#btn-submit").click(function(event) {
 
   var siteName = $("#site_name").val();
   var siteURL = $("#site_url").val();
+  var siteImagePath = $("#site_img_path").val();
   var valid = true;
 
   if (siteName === "" || siteURL === "") {
@@ -20,7 +21,7 @@ $("#btn-submit").click(function(event) {
 
   if (valid === false) {
   } else {
-    d_saveNewWebsite(siteName, siteURL).then(
+    d_saveNewWebsite(siteName, siteURL, siteImagePath).then(
       website => {
         const Toast = Swal.mixin({
           toast: true,

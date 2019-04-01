@@ -1,7 +1,7 @@
 $(document).ready(function() {
   setActivePage("developer-dashboard");
 
-  d_getAllWebsitesForUser(1).then(
+  d_getAllWebsitesForUser(readCookie("u")).then(
     websites => {
       buildDeveloperDashboard(websites);
       buildWebsiteChart(websites);

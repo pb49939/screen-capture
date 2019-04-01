@@ -31,8 +31,10 @@
           <li id="add-new-website" class="nav-item">
             <a class="nav-link" href="addWebsite.php">Add New Website</a>
           </li>
-          <li id="account" class="nav-item">
-            <a class="nav-link" href="#">Account</a>
+
+    
+          <li id="user" class="nav-item">
+            <a class="nav-link" href="#">| <?php echo($_COOKIE["un"])?></a>
           </li>
         </ul>
       </div>
