@@ -286,6 +286,43 @@ class DataLayer{
         return $rows;
     }
 
+    function addNewTaskByWebsiteID($websiteID, $taskName, $taskURL, $taskImagePath, $taskDescription, $taskUpperDurationThreshold, $taskLowerDurationThreshold, $taskDesiredSessions){
+        
+        
+        $db = new db();
+        $db = $db->connect();
+        $sql = "Select * From Task where TaskName = :taskName and WebsiteID = :websiteID;";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':websiteID', $websiteID);
+        $stmt->bindParam(':taskName', $taskName);
+        $stmt-> execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if(sizeof($rows, 0) < 1){
+            $sql = "INSERT INTO Task (TaskName, TaskURL, TaskDescription, TaskImagePath, UpperDurationThreshold, LowerDurationThreshold, WebsiteID, DesiredUserSessions) VALUES (:taskName, :taskURL, :taskDescription, :taskImagePath, :upperDurationThreshold, :lowerDurationThreshold, :websiteID, :desiredUserSessions);";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':websiteID', $websiteID);
+            $stmt->bindParam(':taskName', $taskName);
+            $stmt->bindParam(':taskURL', $taskURL);
+            $stmt->bindParam(':taskImagePath', $taskImagePath);
+            $stmt->bindParam(':taskDescription', $taskDescription);
+            $stmt->bindParam(':upperDurationThreshold', $taskUpperDurationThreshold);
+            $stmt->bindParam(':lowerDurationThreshold', $taskLowerDurationThreshold);
+            $stmt->bindParam(':desiredUserSessions', $taskDesiredSessions);
+            $stmt-> execute();
+
+            $sql = "Select * From Task where TaskName = :taskName and WebsiteID = :websiteID;";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':websiteID', $websiteID);
+            $stmt->bindParam(':taskName', $taskName);
+            $stmt-> execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        }
+        
+        return $rows;
+    }
+
 }
 
 ?>

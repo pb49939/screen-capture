@@ -208,3 +208,27 @@ function d_getWebsiteInfoByWebsiteID(websiteID) {
 
   return promiseObj;
 }
+
+function d_addNewTaskByWebsiteID(params) {
+  var promiseObj = new Promise(function(resolve, reject) {
+    request = $.ajax({
+      url: "/screen-capture/BackEnd/requests/addTaskByWebsiteID.php",
+      type: "post",
+      data: params,
+      success: function(response, textStatus, jqXHR) {
+        // Log a message to the console
+
+        var task = JSON.parse(response);
+
+        console.log(task);
+        resolve(task);
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        alert("some error");
+        reject(errorThrown);
+      }
+    });
+  });
+
+  return promiseObj;
+}

@@ -1,4 +1,5 @@
 function buildTaskList(tasks) {
+  $("#task-list").empty();
   for (var i = 0; i < tasks.length; i++) {
     render(
       "a",
@@ -13,6 +14,8 @@ function buildTaskList(tasks) {
 }
 
 function buildTaskCards(tasks) {
+  $("#task-card-container").empty();
+
   render(
     "div",
     "task-card-container",
@@ -130,6 +133,7 @@ function buildTaskCards(tasks) {
 }
 
 function buildTaskCardsForUserTester(tasks) {
+  $("#task-card-container").empty();
   render(
     "div",
     "task-card-container",
@@ -224,6 +228,8 @@ function buildTaskCardsHoldingRecordings(recordings) {
   let positiveFeel = '<i class="fas fa-thumbs-up good-text"></i>';
   let lackingPositiveFeel = '<i class="fas fa-thumbs-down bad-text"></i>';
 
+  $("#task-cards-holding-recordings-row").empty();
+
   for (var i = 0; i < recordings.length; i++) {
     duration = parseInt(recordings[i].Duration);
     tooLong = parseInt(recordings[i].UpperDurationThreshold);
@@ -274,6 +280,7 @@ function buildTaskCardsHoldingRecordings(recordings) {
 }
 
 function buildDeveloperDashboard(websites) {
+  $("#developer-dashboard-render-mount").empty();
   for (var i = 0; i < websites.length; i++) {
     render(
       "div",

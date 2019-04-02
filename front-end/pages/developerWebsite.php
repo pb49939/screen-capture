@@ -61,6 +61,7 @@ if (isset($_GET['wid'])) {
             <div id="task-card-container">
                 <!--  the task cards are dynamically injected into this DIV from dynamicallyBuild.js  -->
             </div>
+            <div id="btn-add-task" class="btn-primary">Add New Task</div>
             <!-- /.col-lg-9 -->
         </div>
         <!-- /.row -->
