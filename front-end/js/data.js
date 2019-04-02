@@ -70,9 +70,9 @@ function d_getAllTasksByWebsiteID(websiteID) {
   return promiseObj;
 }
 
-function d_getAllTasksForUserTester(userID) {
+function d_getAllTasksForUserTester(websiteID) {
   var params = new Object();
-  params.userID = userID;
+  params.websiteID = websiteID;
 
   var promiseObj = new Promise(function(resolve, reject) {
     request = $.ajax({

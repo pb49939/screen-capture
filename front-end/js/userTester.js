@@ -1,7 +1,9 @@
 $(document).ready(function() {
   setActivePage("user-tester");
 
-  d_getAllTasksForUserTester(1).then(
+  var websiteID = $("#websiteID").val();
+
+  d_getAllTasksForUserTester(websiteID).then(
     tasks => {
       buildTaskList(tasks);
       buildTaskCardsForUserTester(tasks);

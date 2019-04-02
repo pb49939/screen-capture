@@ -178,13 +178,13 @@ class DataLayer{
         
     }
 
-    function getAllTasksForUserTester($userID){
+    function getAllTasksForUserTester($websiteID){
 
         $db = new db();
         $db = $db->connect();
-        $sql = "SELECT t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold, count(distinct r.RecordingID) as TotalSessions, sum(IFNULL(r.Duration, 0)) as TotalDuration, sum(IFNULL(r.PositiveFeel, 0)) as TotalPositiveFeel, IFNULL(r.UserID, 0) as Completed FROM Task t LEFT JOIN Recording r on r.TaskID = t.TaskID and r.UserID = :userID GROUP BY t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold";
+        $sql = "SELECT t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold, count(distinct r.RecordingID) as TotalSessions, sum(IFNULL(r.Duration, 0)) as TotalDuration, sum(IFNULL(r.PositiveFeel, 0)) as TotalPositiveFeel, IFNULL(r.UserID, 0) as Completed FROM Task t LEFT JOIN Recording r on r.TaskID = t.TaskID where t.WebsiteID = :websiteID GROUP BY t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold";
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':userID', $userID);
+        $stmt->bindParam(':websiteID', $websiteID);
         $stmt-> execute();
 
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);

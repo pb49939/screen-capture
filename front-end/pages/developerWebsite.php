@@ -70,6 +70,8 @@ if (isset($_GET['wid'])) {
 
     <input hidden id="websiteID" type="text" value=<?php  echo($websiteID)  ?> />
 
+    
+
     <?php
       include_once("../partials/footer.php");
      ?>

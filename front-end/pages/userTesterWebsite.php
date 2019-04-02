@@ -76,6 +76,7 @@ if (isset($_GET['wid'])) {
     <div style="display: none;" id="get-screen"></div>
     <div style="display: none;" id="stop-screen"></div>
     <input hidden id="taskID" type="text" value="" />
+    <input hidden id="websiteID" type="text" value=<?php  echo($websiteID)  ?> />
     <!-- /.container -->
 
     <?php

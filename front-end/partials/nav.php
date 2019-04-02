@@ -34,7 +34,7 @@
 
     
           <li id="user" class="nav-item">
-            <a class="nav-link" href="#">| <?php echo($_COOKIE["un"])?></a>
+            <a class="nav-link" href="index.php">| <?php echo($_COOKIE["un"])?></a>
           </li>
         </ul>
       </div>

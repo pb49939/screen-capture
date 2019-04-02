@@ -1,16 +1,16 @@
 <?php
 include_once("../dataLayer.php");
 
-if (isset($_POST["userID"]))
+if (isset($_POST["websiteID"]))
 {
-$userID = $_POST["userID"];
+$websiteID = $_POST["websiteID"];
 }else{
-    echo ("ERROR: No userID in request to get recordings.");
+    echo ("ERROR: No website ID in request to get recordings.");
 }
 
 
 $dl = new dataLayer();
-$tasks = $dl->getAllTasksForUserTester($userID);
+$tasks = $dl->getAllTasksForUserTester($websiteID);
 echo(json_encode($tasks));
 
 return;
