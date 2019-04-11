@@ -37,8 +37,10 @@ function submitLogin(username, password) {
 
   d_login(serializedData).then(
     user => {
-      if (user == "authenticated") {
-        document.getElementById("authenticated").click();
+      if (user == "authenticatedUT") {
+        document.getElementById("authenticatedUT").click();
+      } else if (user == "authenticatedD") {
+        document.getElementById("authenticatedD").click();
       } else {
         const Toast = Swal.mixin({
           toast: true,

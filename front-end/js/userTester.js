@@ -1,3 +1,4 @@
+var tasksGlobal;
 $(document).ready(function() {
   setActivePage("user-tester");
 
@@ -5,6 +6,7 @@ $(document).ready(function() {
 
   d_getAllTasksForUserTester(websiteID).then(
     tasks => {
+      tasksGlobal = tasks;
       buildTaskList(tasks);
       buildTaskCardsForUserTester(tasks);
       initializeRecordExtension();
@@ -13,22 +15,27 @@ $(document).ready(function() {
   );
 });
 
-function startRecordingFlow(taskID) {
+function startRecordingFlow(taskID, description) {
   Swal.fire({
     title: "<strong>Record a Session</strong>",
     type: "info",
     html:
-      "You will be asked to use our Browser Extension to share your screen with us.",
+      "You will be asked to use our Browser Extension to share your screen with us. <br /> " +
+      description,
     showCloseButton: true,
     showCancelButton: true,
     focusConfirm: false,
     confirmButtonText:
-      "<a href='https://www.alphasigs.org' target='blank'><span style='color: white;'>Record</span></a>",
+      "<a href='https://" +
+      tasksGlobal[0].WebsiteURL +
+      "' target='blank'><span style='color: white;'>Record</span></a>",
     cancelButtonText: "Cancel"
   }).then(result => {
     if (result.value) {
       $("#taskID").val(taskID);
       $("#get-screen").click();
+      //populate the descriptions for the pop up
+      $("#taskDescription").val(description);
 
       Swal.fire({
         title: "<strong>Stop Recording</strong>",

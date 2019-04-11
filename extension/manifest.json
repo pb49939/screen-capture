@@ -1,10 +1,9 @@
 {
   "browser_action": {
-    "default_icon": "favicon.png",
     "default_popup": "popup.html",
     "default_title": "The Session Sanctum"
   },
-  "name": "Senior Captsone User Experience Testing",
+  "name": "The Session Sanctum",
   "description": "",
   "version": "0.3.0",
   "manifest_version": 2,
@@ -13,7 +12,7 @@
     "persistent": false
   },
   "externally_connectable": {
-    "matches": ["*://localhost/*", "*://localhost:8080/*"]
+    "matches": ["*://localhost/*"]
   },
   "permissions": ["desktopCapture"]
 }

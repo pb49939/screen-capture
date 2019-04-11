@@ -58,8 +58,8 @@ include_once("../partials/header.php");
   </div>
 </div>
 
-<a href="developerDashboard.php" id="authenticated"></a>
-
+<a href="developerDashboard.php" id="authenticatedD"></a>
+<a href="userTesterWebsite.php?wid=1" id="authenticatedUT"></a>
 
 <?php
   include_once("../partials/footer.php");

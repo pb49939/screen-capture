@@ -81,7 +81,6 @@ class DataLayer{
         foreach($rows as $row){
 
             if(password_verify($password, $row["Password"])){
-                
                 setcookie("u", $row["UserID"], time() + (86400 * 30), "/");
                 setcookie("fn", $row["FirstName"], time() + (86400 * 30), "/");
                 setcookie("ln", $row["LastName"], time() + (86400 * 30), "/");
@@ -91,9 +90,9 @@ class DataLayer{
                 setcookie("p", $row["Password"], time() + (86400 * 30), "/");
                 setcookie("t", $row["Token"], time() + (86400 * 30), "/");
 
-                return true;
+                return $row["UserType"];
             }else{
-                return false;
+                return -1;
             }
         }
     }
@@ -182,7 +181,7 @@ class DataLayer{
 
         $db = new db();
         $db = $db->connect();
-        $sql = "SELECT t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold, count(distinct r.RecordingID) as TotalSessions, sum(IFNULL(r.Duration, 0)) as TotalDuration, sum(IFNULL(r.PositiveFeel, 0)) as TotalPositiveFeel, IFNULL(r.UserID, 0) as Completed FROM Task t LEFT JOIN Recording r on r.TaskID = t.TaskID where t.WebsiteID = :websiteID GROUP BY t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold";
+        $sql = "SELECT w.WebsiteURL, t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold, count(distinct r.RecordingID) as TotalSessions, sum(IFNULL(r.Duration, 0)) as TotalDuration, sum(IFNULL(r.PositiveFeel, 0)) as TotalPositiveFeel, IFNULL(r.UserID, 0) as Completed FROM Task t LEFT JOIN Recording r on r.TaskID = t.TaskID join Website w on w.WebsiteID = t.WebsiteID where t.WebsiteID = :websiteID GROUP BY t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold;";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':websiteID', $websiteID);
         $stmt-> execute();
@@ -264,7 +263,7 @@ class DataLayer{
     function getAllWebsitesByUserID($userID){
         $db = new db();
         $db = $db->connect();
-        $sql = "SELECT * From Website w Join UserWebsite uw on uw.WebsiteID = w.WebSiteID where uw.UserID = :userID;";
+        $sql = "SELECT * From Website w Join UserWebsite uw on uw.WebsiteID = w.WebSiteID where uw.UserID = :userID order by w.WebsiteID asc;";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':userID', $userID);
         $stmt-> execute();

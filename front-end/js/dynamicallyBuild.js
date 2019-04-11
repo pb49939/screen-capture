@@ -153,8 +153,8 @@ function buildTaskCardsForUserTester(tasks) {
     var tempID;
 
     tempID = "get-screen" + i;
-
-    if (tasks[i].Completed == 1) {
+    let userID = readCookie("u");
+    if (tasks[i].Completed == readCookie("u")) {
       status = "good";
       statusText = "Completed";
     } else {
@@ -162,9 +162,8 @@ function buildTaskCardsForUserTester(tasks) {
       statusText = "Incomplete";
     }
     var description = tasks[i].TaskDescription || "No Description";
-
-    if (description !== null && description.length > 60) {
-      description = trimString(description, 60);
+    if (description !== null && description.length > 100) {
+      description = trimString(description, 100);
     }
 
     render(
@@ -196,6 +195,8 @@ function buildTaskCardsForUserTester(tasks) {
         tempID +
         '"onclick="startRecordingFlow(' +
         tasks[i].TaskID +
+        "," +
+        tasks[i].description +
         ')">' +
         tasks[i].TaskName +
         '</div> </h4><h5>alphasigs.org/</h5> <p class="card-text">' +

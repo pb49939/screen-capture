@@ -7,7 +7,9 @@ if (isset($_COOKIE['t'])) {
     $authenticated = $dl->authenticateToken();
 } 
 
-if($authenticated != true){
-    header("Location:index.php");
+
+if($authenticated != "USER_TESTER" && $authenticated != "DEVELOPER"){
+        header("Location:index.php");
 }
+
 ?>

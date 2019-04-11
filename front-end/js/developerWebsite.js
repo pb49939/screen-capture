@@ -62,15 +62,6 @@ function addTaskFlow(websiteID) {
     ])
     .then(result => {
       if (result.value) {
-        Swal.fire({
-          title: "All done!",
-          html:
-            "Your answers: <pre><code>" +
-            JSON.stringify(result.value) +
-            "</code></pre>",
-          confirmButtonText: "Lovely!"
-        });
-
         var taskName = result.value[0];
         var taskURL = result.value[1];
         var taskImagePath = result.value[2];

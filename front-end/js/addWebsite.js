@@ -41,3 +41,28 @@ $("#btn-submit").click(function(event) {
     );
   }
 });
+
+function testURL() {
+  $("#frame-mount").empty();
+  let url = "https://" + $("#site_url").val();
+  let iframe =
+    '<iframe src="' +
+    url +
+    '" width="1000" height="800" allowfullscreen="allowfullscreen"></iframe>';
+  render("div", "frame-mount", iframe, "", "", "", "");
+  window.location.href = "#frame-mount";
+
+  setTimeout(function() {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 4000
+    });
+
+    Toast.fire({
+      type: "info",
+      title: "Does this look like the correct website?"
+    });
+  }, 1000);
+}
