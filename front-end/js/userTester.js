@@ -20,8 +20,9 @@ function startRecordingFlow(taskID, description) {
     title: "<strong>Record a Session</strong>",
     type: "info",
     html:
-      "You will be asked to use our Browser Extension to share your screen with us. <br /> " +
-      description,
+      "You will be asked to use our Browser Extension to share your screen with us. <br /><br /> Task Description <br /><br /><strong> " +
+      description +
+      "</strong>",
     showCloseButton: true,
     showCancelButton: true,
     focusConfirm: false,
@@ -60,18 +61,24 @@ function startRecordingFlow(taskID, description) {
             cancelButtonText: '<i class="fa fa-thumbs-down"></i> Not Great...',
             cancelButtonAriaLabel: "Thumbs down"
           }).then(result => {
-            let positiveFeel = false;
             if (result.value) {
-              positiveFeel = true;
-            }
-
-            if (positiveFeel) {
               setCookie("POSITIVE_FEEL", true);
+              setCookie("COMMENT", "NO_COMMENT");
+              $("#stop-screen").click();
             } else {
-              setCookie("POSITIVE_FEEL", false);
+              Swal.fire({
+                title:
+                  "Sorry you had a negative experience, let the developers know why",
+                input: "text",
+                showCancelButton: false
+              }).then(result => {
+                if (result.value) {
+                  setCookie("POSITIVE_FEEL", false);
+                  setCookie("COMMENT", result.value.replace(/\'/g, ""));
+                  $("#stop-screen").click();
+                }
+              });
             }
-
-            $("#stop-screen").click();
           });
         }
       });

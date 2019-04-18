@@ -89,6 +89,7 @@ class DataLayer{
                 setcookie("un", $row["Username"], time() + (86400 * 30), "/");
                 setcookie("p", $row["Password"], time() + (86400 * 30), "/");
                 setcookie("t", $row["Token"], time() + (86400 * 30), "/");
+                setcookie("ext", $row["ExtensionID"], time() + (86400 * 30), "/");
 
                 return $row["UserType"];
             }else{
@@ -111,17 +112,18 @@ class DataLayer{
         }
 
     }
-    function saveNewRecording($taskID, $duration, $positiveFeel){
+    function saveNewRecording($taskID, $duration, $positiveFeel, $comment){
 
-        $basePath = "http://localhost/screen-capture/BackEnd/recordings/blob";
+        $basePath = "https://sessionsanctum.com/screen-capture/BackEnd/recordings/blob";
 
         $db = new db();
         $db = $db->connect();
-        $sql = "Insert into Recording (TaskID, Duration, PositiveFeel, UserID) VALUES (:taskID, :duration, :positiveFeel, :userID);";
+        $sql = "Insert into Recording (TaskID, Duration, PositiveFeel, UserID, Comment) VALUES (:taskID, :duration, :positiveFeel, :userID, :comment);";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':taskID', $taskID);
         $stmt->bindParam(':duration', $duration);
         $stmt->bindParam(':positiveFeel', $positiveFeel);
+        $stmt->bindParam(':comment', $comment);
         $stmt->bindParam(':userID', $_COOKIE["u"]);
         $stmt-> execute();
 
@@ -144,7 +146,7 @@ class DataLayer{
            
         }
 
-        return "";
+        return "99";
         
     }
 
@@ -181,7 +183,7 @@ class DataLayer{
 
         $db = new db();
         $db = $db->connect();
-        $sql = "SELECT w.WebsiteURL, t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold, count(distinct r.RecordingID) as TotalSessions, sum(IFNULL(r.Duration, 0)) as TotalDuration, sum(IFNULL(r.PositiveFeel, 0)) as TotalPositiveFeel, IFNULL(r.UserID, 0) as Completed FROM Task t LEFT JOIN Recording r on r.TaskID = t.TaskID join Website w on w.WebsiteID = t.WebsiteID where t.WebsiteID = :websiteID GROUP BY t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold;";
+        $sql = "SELECT w.WebsiteURL, t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold, count(distinct r.RecordingID) as TotalSessions, sum(IFNULL(r.Duration, 0)) as TotalDuration, sum(IFNULL(r.PositiveFeel, 0)) as TotalPositiveFeel FROM Task t LEFT JOIN Recording r on r.TaskID = t.TaskID join Website w on w.WebsiteID = t.WebsiteID where t.WebsiteID = :websiteID GROUP BY t.TaskID, t.TaskName, t.TaskDescription, t.TaskImagePath, t.UpperDurationThreshold, t.LowerDurationThreshold";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':websiteID', $websiteID);
         $stmt-> execute();

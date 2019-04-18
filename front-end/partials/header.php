@@ -24,5 +24,6 @@
 
     <!-- Custom styles for this template -->
     <link href="../css/site.css" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
 </head>

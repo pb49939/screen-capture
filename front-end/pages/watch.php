@@ -67,6 +67,10 @@ $taskName = $task["TaskName"];
                 </a>
             </div>
 
+            <br> 
+
+            <div class="recording-comment" id="comment-mount"></div>
+
             <div class="row" id="task-cards-holding-recordings-row">
 
 

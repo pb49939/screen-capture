@@ -4,15 +4,15 @@
     "default_title": "The Session Sanctum"
   },
   "name": "The Session Sanctum",
-  "description": "",
-  "version": "0.3.0",
+  "description": "Session recorder for user experience testing",
+  "version": "0.4.0",
   "manifest_version": 2,
   "background": {
     "scripts": ["extension.js"],
     "persistent": false
   },
   "externally_connectable": {
-    "matches": ["*://localhost/*"]
+    "matches": ["https://sessionsanctum.com/*"]
   },
   "permissions": ["desktopCapture"]
 }

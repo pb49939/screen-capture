@@ -27,8 +27,14 @@ if(isset($_POST['positiveFeel'])){
     $positiveFeel = false;
 }
 
+if(isset($_POST['comment'])){
+    $comment= $_POST['comment'];
+}else{
+    $comment= "";
+}
+
 $dl = new dataLayer();
-$recordingID = $dl-> saveNewRecording($taskID, $duration, $positiveFeel);
+$recordingID = $dl-> saveNewRecording($taskID, $duration, $positiveFeel, $comment);
 
 
 //$fileName = $_FILES["file1"]["name"] . date('m/d/Y_h:i:s', time()); // The file name

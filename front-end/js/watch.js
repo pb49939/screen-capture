@@ -12,7 +12,14 @@ $(document).ready(function() {
   );
 });
 
-function loadNewVideo(videoPath) {
+function loadNewVideo(videoPath, comment) {
+  console.log(comment);
+  if (comment != "NO_COMMENT") {
+    $("#comment-mount").text('"' + comment + '"');
+  } else {
+    $("#comment-mount").text("");
+  }
+
   $("#recording-active").empty();
   buildVideoPlayer(videoPath);
 }

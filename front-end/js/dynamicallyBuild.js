@@ -154,13 +154,10 @@ function buildTaskCardsForUserTester(tasks) {
 
     tempID = "get-screen" + i;
     let userID = readCookie("u");
-    if (tasks[i].Completed == readCookie("u")) {
-      status = "good";
-      statusText = "Completed";
-    } else {
-      status = "bad";
-      statusText = "Incomplete";
-    }
+
+    status = "good";
+    statusText = readCookie("un");
+
     var description = tasks[i].TaskDescription || "No Description";
     if (description !== null && description.length > 100) {
       description = trimString(description, 100);
@@ -195,9 +192,9 @@ function buildTaskCardsForUserTester(tasks) {
         tempID +
         '"onclick="startRecordingFlow(' +
         tasks[i].TaskID +
-        "," +
-        tasks[i].description +
-        ')">' +
+        ", '" +
+        tasks[i].TaskDescription +
+        "')\">" +
         tasks[i].TaskName +
         '</div> </h4><h5>alphasigs.org/</h5> <p class="card-text">' +
         description +
@@ -263,6 +260,8 @@ function buildTaskCardsHoldingRecordings(recordings) {
         '\')"> <img class="card-img-top card-task-img" src="images/asp-register.png" alt=""></a>' +
         '<div class="card-body"><h4 class= "card-title text-left" ><div onClick ="loadNewVideo(\'' +
         recordingPath +
+        "', '" +
+        recordings[i].Comment +
         "')\" >" +
         recordings[i].Duration +
         " seconds</div></h4 >" +

@@ -12,7 +12,7 @@ function play() {
 }
 
 function initializeRecordExtension() {
-  const EXTENSION_ID = "bhbnblpflpkjffjfkpnoajfnglaldmla";
+  const EXTENSION_ID = readCookie("ext");
   let videoSource;
 
   chrome.runtime.sendMessage(EXTENSION_ID, "version", response => {
@@ -124,6 +124,7 @@ function uploadFile(file) {
   formdata.append("file1", file);
   formdata.append("taskID", $("#taskID").val());
   formdata.append("positiveFeel", readCookie("POSITIVE_FEEL"));
+  formdata.append("comment", readCookie("COMMENT"));
   formdata.append("duration", (videoEndTime - videoStartTime) / 1000);
   var ajax = new XMLHttpRequest();
   ajax.upload.addEventListener("progress", progressHandler, false);

@@ -262,6 +262,13 @@ h6 {
   padding: 1vmin;
 }
 
+.recording-comment {
+  font-size: 25px;
+  width: 100%;
+  text-align: center;
+  font-style: italic;
+}
+
 /* developer dashboard classes */
 .website-card-container {
   display: flex;
